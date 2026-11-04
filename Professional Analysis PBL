@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Analysis PBL Portfolio</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2c5282;
+            --accent: #3182ce;
+            --bg: #f7fafc;
+            --text: #2d3748;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            display: flex;
+        }
+
+        /* Navigation Sidebar */
+        nav {
+            width: 280px;
+            background-color: var(--primary);
+            color: var(--white);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        nav h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        nav ul { list-style-type: none; }
+
+        nav ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            display: block;
+            padding: 0.6rem 0.8rem;
+            margin: 0.2rem 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding-left: 1.2rem;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem;
+            max-width: 1000px;
+        }
+
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+
+        h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+        h2 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.3rem; color: var(--primary); margin: 1.5rem 0 0.8rem; }
+        
+        p, ul, ol { margin-bottom: 1rem; }
+        
+        .placeholder {
+            background-color: #fffbeb;
+            border-left: 4px solid #f6e05e;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #744210;
+        }
+
+        .document-block {
+            border: 1px solid var(--light-gray);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            background: #fcfcfc;
+            border-radius: 4px;
+        }
+
+        .memo-header, .report-header {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resume-card {
+            border: 1px solid var(--light-gray);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--white);
+        }
+
+        .btn-print {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .btn-print:hover { background-color: var(--secondary); }
+
+        /* Print Styles for PDF/Pagination */
+        @media print {
+            body { display: block; background: white; }
+            nav, .btn-print, .no-print { display: none !important; }
+            main { margin-left: 0; padding: 0; max-width: 100%; }
+            section { 
+                box-shadow: none; 
+                margin: 0; 
+                padding: 1rem 0; 
+                page-break-before: always; 
+                border: none;
+            }
+            section:first-of-type { page-break-before: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
+            .document-block { border: 1px solid #ccc; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav { transform: translateX(-100%); width: 100%; }
+            nav.open { transform: translateX(0); }
+            main { margin-left: 0; padding: 1.5rem; }
+            .menu-toggle { display: block; }
+        }
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 200;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) { .menu-toggle { display: block; } }
+    </style>
+</head>
+<body>
+
+    <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">☰ Menu</button>
+
+    <!-- Navigation / Table of Contents -->
+    <nav class="no-print">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#title">Title Page</a></li>
+            <li><a href="#pathway">Pathway Expert</a></li>
+            <li><a href="#science">Science Expert</a></li>
+            <li><a href="#math">Math Expert</a></li>
+            <li><a href="#government">Government Analyst</a></li>
+            <li><a href="#techwriting">Technical Writer</a></li>
+            <li><a href="#literary">Literary Analyst</a></li>
+            <li><a href="#verification">Verification</a></li>
+            <li><a href="#cited">Works Cited</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <button class="btn-print no-print" onclick="window.print()">🖨️ Export to PDF / Print</button>
+
+        <!-- TITLE PAGE -->
+        <section id="title">
+            <h1>Professional Analysis Portfolio</h1>
+            <p style="font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem;">
+                <strong>Driving Question:</strong> How can we leverage our STEM education to better prepare ourselves for our chosen career pathways?
+            </p>
+            <p><strong>Team Members:</strong> [Insert Names]</p>
+            <p><strong>Chosen Career Pathway:</strong> [Insert Career, e.g., Biomedical Engineer]</p>
+            <p><strong>Date:</strong> November 2026</p>
+            <div class="placeholder">
+                Note: Ensure your final portfolio is at least 2,000 words. Remember: Service industry jobs are strictly excluded from this project!
+            </div>
+        </section>
+
+        <!-- PATHWAY EXPERT -->
+        <section id="pathway">
+            <h2>Pathway Expert: Career Overview</h2>
+            <h3>Job Description & Expectations</h3>
+            <p>[Insert detailed job description, daily responsibilities, and job expectations here.]</p>
+            
+            <h3>Educational Requirements</h3>
+            <p>[Insert required degrees, certifications, and continuous education needed.]</p>
+
+            <h3>Viability & Field Analysis</h3>
+            <p><strong>Location Aspects:</strong> [Where are these jobs located?]</p>
+            <p><strong>Turnover Rate & Job Satisfaction:</strong> [Insert stats on stress, happiness, and turnover.]</p>
+            <p><strong>Alternative Jobs:</strong> [What else can someone in this field do if they leave?]</p>
+            
+            <!-- Placeholder for Graphs/Charts -->
+            <div style="text-align: center; margin: 2rem 0; padding: 2rem; background: #edf2f7; border-radius: 8px;">
+                <p><em>[Insert Legible Graph/Chart here: e.g., Job Growth Projection or Salary by Location]</em></p>
+            </div>
+
+            <!-- Optional Manager/Designer Roles (If 4-person team) -->
+            <div class="placeholder">
+                *If you are in a 4-person team, include the Manager's Proposal and Designer's Infographic here.*
+            </div>
+        </section>
+
+        <!-- SCIENCE EXPERT -->
+        <section id="science">
+            <h2>Science Expert: Universal Truth Email</h2>
+            <div class="document-block">
+                <p><strong>To:</strong> [Science Teacher's Email]</p>
+                <p><strong>From:</strong> [Your Email]</p>
+                <p><strong>Subject:</strong> Connection Between [Science Class] Universal Truth and [Career Field]</p>
+                <br>
+                <p>Dear [Teacher's Name],</p>
+                <p>[Write your email here. Explain a universal truth from your science class (e.g., thermodynamics, cellular respiration, Newton's laws) and explicitly connect it to how it applies to your chosen career field.]</p>
+                <br>
+                <p>Sincerely,</p>
+                <p>[Your Name]</p>
+            </div>
+        </section>
+
+        <!-- MATH EXPERT -->
+        <section id="math">
+            <h2>Math Expert: Memorandum & Budget</h2>
+            <div class="document-block">
+                <div class="memo-header">
+                    <p><strong>MEMORANDUM</strong></p>
+                    <p><strong>TO:</strong> [Recipient/Teacher Name]</p>
+                    <p><strong>FROM:</strong> [Your Name]</p>
+                    <p><strong>DATE:</strong> November 4, 2026</p>
+                    <p><strong>SUBJECT:</strong> Mathematical Applications and First-Year Budget for [Career Field]</p>
+                </div>
+
+                <h3>1. Opening</h3>
+                <p>[Briefly introduce the purpose of the memo and the math concept being discussed.]</p>
+
+                <h3>2. Mathematical Concept Connection</h3>
+                <p>[Explain how a specific concept from your math class connects to your career field.]</p>
+
+                <h3>3. First-Year Employment Budget</h3>
+                <p>[Detail the impacts of necessary education (e.g., student loans), expected starting salary, and first-year expenses.]</p>
+                
+                <div style="text-align: center; margin: 1.5rem 0; padding: 1.5rem; background: #edf2f7; border-radius: 8px;">
+                    <p><em>[Insert Budget Chart/Graph here]</em></p>
+                </div>
+
+                <h3>4. Conclusion</h3>
+                <p>[Summarize the financial and mathematical realities of entering this field.]</p>
+            </div>
+        </section>
+
+        <!-- GOVERNMENT ANALYST -->
+        <section id="government">
+            <h2>Government Analyst: Regulatory Report</h2>
+            <div class="document-block">
+                <div class="report-header">
+                    <h3 style="border: none; margin:0;">Report on Regulations and Legalities in [Career Field]</h3>
+                </div>
+                
+                <p><strong>Table of Contents</strong></p>
+                <ol>
+                    <li>Introduction</li>
+                    <li>Methodology</li>
+                    <li>Discussion of Regulations</li>
+                    <li>Challenges & Solutions</li>
+                    <li>Conclusion & Recommendations</li>
+                </ol>
+
+                <h3>1. Introduction</h3>
+                <p>[Introduce the career field and the scope of the report.]</p>
+
+                <h3>2. Methodology</h3>
+                <p>[Explain how you gathered this information (e.g., interviews, government databases).]</p>
+
+                <h3>3. Discussion</h3>
+                <p>[Detail the specific regulations, legalities, and compliance standards faced by this career.]</p>
+
+                <h3>4. Challenges & Solutions</h3>
+                <p>[What challenges do these regulations present, and what are possible solutions for professionals in the field?]</p>
+
+                <h3>5. Conclusion</h3>
+                <p>[Final recommendations and summary.]</p>
+            </div>
+        </section>
+
+        <!-- TECHNICAL WRITER -->
+        <section id="techwriting">
+            <h2>Technical Writer: Application Materials & Interview</h2>
+            
+            <h3>Applicant 1: No Experience (Entry Level)</h3>
+            <div class="resume-card">
+                <h4>Resume</h4>
+                <p><em>[Insert formatted Resume for an entry-level candidate here]</em></p>
+                <h4>Cover Letter</h4>
+                <p><em>[Insert Cover Letter for the entry-level candidate here]</em></p>
+            </div>
+
+            <h3>Applicant 2: Experienced Candidate Changing Fields</h3>
+            <div class="resume-card">
+                <h4>Resume</h4>
+                <p><em>[Insert formatted Resume for a career-changer here]</em></p>
+                <h4>Cover Letter</h4>
+                <p><em>[Insert Cover Letter for the career-changer here]</em></p>
+            </div>
+
+            <h3>Professional Interview & Showcase Invitation</h3>
+            <div class="document-block">
+                <h4>Email Invitation to Showcase</h4>
+                <p><strong>To:</strong> [Professional's Email]</p>
+                <p><strong>Subject:</strong> Invitation to National STEM Day Showcase</p>
+                <p>[Insert polite, clear, and concise email inviting the professional to the Nov 6 showcase.]</p>
+                
+                <h4 style="margin-top: 2rem;">Interview Transcript</h4>
+                <p><strong>Interviewee:</strong> [Name, Title]</p>
+                <p><strong>Interviewer:</strong> [Your Name]</p>
+                <p><strong>Date:</strong> [Date]</p>
+                <br>
+                <p><strong>Q:</strong> [Insert Question]</p>
+                <p><strong>A:</strong> [Insert Answer]</p>
+                <p><em>[Continue transcript...]</em></p>
+            </div>
+        </section>
+
+        <!-- LITERARY ANALYST -->
+        <section id="literary">
+            <h2>Literary Analyst: Academic Essay</h2>
+            <div class="document-block" style="font-family: 'Times New Roman', Times, serif; line-height: 1.8;">
+                <p style="text-align: center;">[Your Name]</p>
+                <p style="text-align: center;">[Teacher Name]</p>
+                <p style="text-align: center;">[Class Name]</p>
+                <p style="text-align: center;">November 4, 2026</p>
+                <br>
+                <p style="text-align: center; font-weight: bold;">[Title of Your Essay]</p>
+                <br>
+                <p style="text-indent: 2rem;">[Write your AP-style academic essay here. Explore a thematically related literary text (fiction or poetry) and link its theme to your chosen career field. Ensure you use proper academic tone and textual evidence.]</p>
+            </div>
+        </section>
+
+        <!-- VERIFICATION -->
+        <section id="verification">
+            <h2>Career Expert Verification</h2>
+            <div class="document-block">
+                <p><strong>Statement of Verification:</strong></p>
+                <p>I, [Professional's Name], holding the title of [Job Title] at [Company/Organization], have reviewed the portfolio created by [Team Members' Names]. I verify that the information provided regarding the job description, educational requirements, industry regulations, and daily responsibilities of this career field is accurate and reflects the current realities of the profession.</p>
+                <br>
+                <p>Signature: ___________________________ Date: ______________</p>
+                <p><em>(Attach a digital signature, a scanned letter, or an email screenshot from the professional confirming this verification here).</em></p>
+            </div>
+        </section>
+
+        <!-- WORKS CITED -->
+        <section id="cited">
+            <h2>Works Cited</h2>
+            <div class="document-block">
+                <p>[Format your citations in MLA or APA style. Ensure you include:]</p>
+                <ul>
+                    <li>The properly cited interview with your professional.</li>
+                    <li>Sources for job descriptions and educational requirements.</li>
+                    <li>Sources for government regulations.</li>
+                    <li>Sources for the literary text.</li>
+                    <li>Sources for any graphs, charts, or salary data used.</li>
+                </ul>
+                <br>
+                <p><em>[Insert Citation 1]</em></p>
+                <p><em>[Insert Citation 2]</em></p>
+                <p><em>[Insert Citation 3]</em></p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close mobile menu if open
+                document.querySelector('nav').classList.remove('open');
+            });
+        });
+
+        // Highlight active section in nav on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${current}`) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
