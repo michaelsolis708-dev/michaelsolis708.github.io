@@ -84,6 +84,7 @@
         h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
         h2 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; }
         h3 { font-size: 1.3rem; color: var(--primary); margin: 1.5rem 0 0.8rem; }
+        h4 { font-size: 1.1rem; color: var(--secondary); margin: 1rem 0 0.5rem; }
         
         p, ul, ol { margin-bottom: 1rem; }
         
@@ -142,7 +143,7 @@
                 border: none;
             }
             section:first-of-type { page-break-before: avoid; }
-            h1, h2, h3 { page-break-after: avoid; }
+            h1, h2, h3, h4 { page-break-after: avoid; }
             .document-block { border: 1px solid #ccc; }
         }
 
@@ -151,7 +152,6 @@
             nav { transform: translateX(-100%); width: 100%; }
             nav.open { transform: translateX(0); }
             main { margin-left: 0; padding: 1.5rem; }
-            .menu-toggle { display: block; }
         }
         .menu-toggle {
             display: none;
@@ -179,10 +179,13 @@
         <ul>
             <li><a href="#title">Title Page</a></li>
             <li><a href="#pathway">Pathway Expert</a></li>
+            <li><a href="#manager">Manager: Proposal</a></li>
+            <li><a href="#designer">Designer: Infographic</a></li>
             <li><a href="#science">Science Expert</a></li>
             <li><a href="#math">Math Expert</a></li>
             <li><a href="#government">Government Analyst</a></li>
             <li><a href="#techwriting">Technical Writer</a></li>
+            <li><a href="#interview">Professional Interview</a></li>
             <li><a href="#literary">Literary Analyst</a></li>
             <li><a href="#verification">Verification</a></li>
             <li><a href="#cited">Works Cited</a></li>
@@ -198,11 +201,11 @@
             <p style="font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem;">
                 <strong>Driving Question:</strong> How can we leverage our STEM education to better prepare ourselves for our chosen career pathways?
             </p>
-            <p><strong>Team Members:</strong> [Insert Names]</p>
+            <p><strong>Team Members:</strong> [Insert All 4 Names]</p>
             <p><strong>Chosen Career Pathway:</strong> [Insert Career, e.g., Biomedical Engineer]</p>
             <p><strong>Date:</strong> November 2026</p>
             <div class="placeholder">
-                Note: Ensure your final portfolio is at least 2,000 words. Remember: Service industry jobs are strictly excluded from this project!
+                Reminder: Ensure your final portfolio is at least 2,000 words. Service industry jobs are strictly excluded!
             </div>
         </section>
 
@@ -220,14 +223,52 @@
             <p><strong>Turnover Rate & Job Satisfaction:</strong> [Insert stats on stress, happiness, and turnover.]</p>
             <p><strong>Alternative Jobs:</strong> [What else can someone in this field do if they leave?]</p>
             
-            <!-- Placeholder for Graphs/Charts -->
             <div style="text-align: center; margin: 2rem 0; padding: 2rem; background: #edf2f7; border-radius: 8px;">
                 <p><em>[Insert Legible Graph/Chart here: e.g., Job Growth Projection or Salary by Location]</em></p>
             </div>
+        </section>
 
-            <!-- Optional Manager/Designer Roles (If 4-person team) -->
-            <div class="placeholder">
-                *If you are in a 4-person team, include the Manager's Proposal and Designer's Infographic here.*
+        <!-- MANAGER -->
+        <section id="manager">
+            <h2>Manager: Hiring Proposal</h2>
+            <div class="document-block">
+                <p><strong>To:</strong> [Superiors/Board of Directors]</p>
+                <p><strong>From:</strong> [Your Name/Manager Title]</p>
+                <p><strong>Date:</strong> November 4, 2026</p>
+                <p><strong>Subject:</strong> Proposal to Hire a [Job Title] for Our Team</p>
+                <br>
+
+                <h3>1. Executive Summary</h3>
+                <p>[Brief overview of the proposal and why hiring this role is critical right now.]</p>
+
+                <h3>2. Introduction</h3>
+                <p><strong>Context:</strong> [Current state of the team/business.]</p>
+                <p><strong>Scope:</strong> [What this new hire will cover.]</p>
+                <p><strong>Benefits to the Audience:</strong> [ROI or value this brings to the superiors/company.]</p>
+
+                <h3>3. Body</h3>
+                <p><strong>Role Description:</strong> [Detailed breakdown of what the person will do.]</p>
+                <p><strong>Budget:</strong> [Salary, benefits, and equipment costs.]</p>
+                <p><strong>Implementation Plan:</strong> [Timeline for hiring and onboarding.]</p>
+
+                <h3>4. Conclusion</h3>
+                <p>[Summarize key points and leave a lasting impression on why this hire is necessary.]</p>
+            </div>
+        </section>
+
+        <!-- DESIGNER -->
+        <section id="designer">
+            <h2>Designer: Day-in-the-Life Infographic</h2>
+            <div class="document-block" style="text-align: center;">
+                <p><em>[Insert your Infographic Image Here]</em></p>
+                <div class="placeholder" style="text-align: left;">
+                    <strong>Designer Checklist:</strong>
+                    <ul>
+                        <li>Does it present the core responsibilities and job tasks?</li>
+                        <li>Does it visually convey a "day-in-the-life" timeline or flow?</li>
+                        <li>Does it make good use of visual space, structure, color, and fonts?</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -240,7 +281,10 @@
                 <p><strong>Subject:</strong> Connection Between [Science Class] Universal Truth and [Career Field]</p>
                 <br>
                 <p>Dear [Teacher's Name],</p>
-                <p>[Write your email here. Explain a universal truth from your science class (e.g., thermodynamics, cellular respiration, Newton's laws) and explicitly connect it to how it applies to your chosen career field.]</p>
+                <p>[Salutation and opening.]</p>
+                <p>[Body Paragraph 1: Explain the universal truth from your science class.]</p>
+                <p>[Body Paragraph 2: Explicitly connect it to how it applies to your chosen career field.]</p>
+                <p>[Appropriate closing.]</p>
                 <br>
                 <p>Sincerely,</p>
                 <p>[Your Name]</p>
@@ -291,7 +335,8 @@
                     <li>Methodology</li>
                     <li>Discussion of Regulations</li>
                     <li>Challenges & Solutions</li>
-                    <li>Conclusion & Recommendations</li>
+                    <li>Conclusions & Recommendations</li>
+                    <li>Appendices</li>
                 </ol>
 
                 <h3>1. Introduction</h3>
@@ -304,16 +349,19 @@
                 <p>[Detail the specific regulations, legalities, and compliance standards faced by this career.]</p>
 
                 <h3>4. Challenges & Solutions</h3>
-                <p>[What challenges do these regulations present, and what are possible solutions for professionals in the field?]</p>
+                <p>[What challenges do these regulations present, and what are possible solutions?]</p>
 
-                <h3>5. Conclusion</h3>
+                <h3>5. Conclusions & Recommendations</h3>
                 <p>[Final recommendations and summary.]</p>
+
+                <h3>6. Appendices</h3>
+                <p><em>[Insert any supplementary charts, legal codes, or extra data here.]</em></p>
             </div>
         </section>
 
         <!-- TECHNICAL WRITER -->
         <section id="techwriting">
-            <h2>Technical Writer: Application Materials & Interview</h2>
+            <h2>Technical Writer: Application Materials</h2>
             
             <h3>Applicant 1: No Experience (Entry Level)</h3>
             <div class="resume-card">
@@ -330,22 +378,25 @@
                 <h4>Cover Letter</h4>
                 <p><em>[Insert Cover Letter for the career-changer here]</em></p>
             </div>
+        </section>
 
-            <h3>Professional Interview & Showcase Invitation</h3>
+        <!-- PROFESSIONAL INTERVIEW -->
+        <section id="interview">
+            <h2>Professional Interview & Showcase Invitation</h2>
             <div class="document-block">
-                <h4>Email Invitation to Showcase</h4>
+                <h3>Email Invitation to Showcase</h3>
                 <p><strong>To:</strong> [Professional's Email]</p>
                 <p><strong>Subject:</strong> Invitation to National STEM Day Showcase</p>
                 <p>[Insert polite, clear, and concise email inviting the professional to the Nov 6 showcase.]</p>
                 
-                <h4 style="margin-top: 2rem;">Interview Transcript</h4>
+                <h3 style="margin-top: 2rem;">Interview Transcript</h3>
                 <p><strong>Interviewee:</strong> [Name, Title]</p>
                 <p><strong>Interviewer:</strong> [Your Name]</p>
                 <p><strong>Date:</strong> [Date]</p>
                 <br>
                 <p><strong>Q:</strong> [Insert Question]</p>
                 <p><strong>A:</strong> [Insert Answer]</p>
-                <p><em>[Continue transcript...]</em></p>
+                <p><em>[Continue transcript... Ensure this is thorough to help hit the 2,000-word count!]</em></p>
             </div>
         </section>
 
@@ -405,7 +456,6 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
-                // Close mobile menu if open
                 document.querySelector('nav').classList.remove('open');
             });
         });
