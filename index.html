@@ -4,213 +4,371 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Analysis PBL Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a365d;
-            --secondary: #2c5282;
-            --accent: #3182ce;
-            --bg: #f7fafc;
-            --text: #2d3748;
-            --light-gray: #e2e8f0;
-            --white: #ffffff;
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --ink: #1a1a1a;
+            --ink-soft: #4b4b4b;
+            --muted: #7a7a7a;
+            --line: #e5e5e5;
+            --line-soft: #f0f0f0;
+            --hover: #f5f5f5;
+            --accent: #2c2c2c;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--ink);
             background-color: var(--bg);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Navigation Bar */
+        header.top-bar {
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--line);
+            padding: 1.25rem 2rem;
             display: flex;
-        }
-
-        /* Navigation Sidebar */
-        nav {
-            width: 280px;
-            background-color: var(--primary);
-            color: var(--white);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 2rem 1rem;
-            transition: transform 0.3s ease;
+            justify-content: space-between;
+            align-items: center;
             z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
-        nav h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
+        .site-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 0.5px;
         }
 
-        nav ul { list-style-type: none; }
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
 
-        nav ul li a {
-            color: #cbd5e0;
-            text-decoration: none;
-            display: block;
-            padding: 0.6rem 0.8rem;
-            margin: 0.2rem 0;
+        .dropdown-toggle {
+            background: transparent;
+            border: 1px solid var(--line);
+            padding: 0.6rem 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ink);
+            cursor: pointer;
             border-radius: 4px;
-            font-size: 0.95rem;
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
         }
 
-        nav ul li a:hover, nav ul li a.active {
-            background-color: var(--secondary);
-            color: var(--white);
-            padding-left: 1.2rem;
+        .dropdown-toggle:hover {
+            background: var(--hover);
+            border-color: var(--ink-soft);
+        }
+
+        .dropdown-toggle::after {
+            content: '▾';
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        .dropdown.open .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            min-width: 260px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.7rem 1.25rem;
+            color: var(--ink-soft);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.15s;
+            border-left: 2px solid transparent;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--hover);
+            color: var(--ink);
+            border-left-color: var(--ink);
+        }
+
+        .dropdown-menu a.active {
+            color: var(--ink);
+            font-weight: 500;
+            background: var(--line-soft);
         }
 
         /* Main Content */
         main {
-            margin-left: 280px;
-            flex: 1;
-            padding: 3rem;
-            max-width: 1000px;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
         }
 
-        section {
-            background: var(--white);
-            padding: 2.5rem;
+        /* Page Sections - Only one visible at a time */
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--ink);
             margin-bottom: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            page-break-inside: avoid;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--line);
+            letter-spacing: -0.3px;
         }
 
-        h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
-        h2 { font-size: 1.8rem; color: var(--secondary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; }
-        h3 { font-size: 1.3rem; color: var(--primary); margin: 1.5rem 0 0.8rem; }
-        h4 { font-size: 1.1rem; color: var(--secondary); margin: 1rem 0 0.5rem; }
-        
-        p, ul, ol { margin-bottom: 1rem; }
-        
-        .placeholder {
-            background-color: #fffbeb;
-            border-left: 4px solid #f6e05e;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-style: italic;
-            color: #744210;
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 2rem 0 0.75rem;
         }
 
+        h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--ink);
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        p, ul, ol { margin-bottom: 1rem; color: var(--ink-soft); }
+        ul, ol { padding-left: 1.5rem; }
+        li { margin-bottom: 0.4rem; }
+
+        strong { color: var(--ink); font-weight: 500; }
+
+        /* Document Blocks */
         .document-block {
-            border: 1px solid var(--light-gray);
-            padding: 2rem;
-            margin: 1.5rem 0;
-            background: #fcfcfc;
+            border: 1px solid var(--line);
+            padding: 2.5rem;
+            margin: 2rem 0;
+            background: var(--surface);
             border-radius: 4px;
         }
 
         .memo-header, .report-header {
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 1px solid var(--line);
             padding-bottom: 1rem;
             margin-bottom: 1.5rem;
         }
 
         .resume-card {
-            border: 1px solid var(--light-gray);
-            padding: 1.5rem;
+            border: 1px solid var(--line);
+            padding: 2rem;
             margin-bottom: 1.5rem;
-            background: var(--white);
+            background: var(--surface);
+            border-radius: 4px;
         }
 
-        .btn-print {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
+        .placeholder-box {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--line-soft);
+            border-radius: 4px;
+            color: var(--muted);
+            font-style: italic;
+            margin: 2rem 0;
+        }
+
+        /* Title Page Special Styling */
+        .title-page {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .title-page h1 {
+            font-size: 3.5rem;
             margin-bottom: 2rem;
         }
-        .btn-print:hover { background-color: var(--secondary); }
 
-        /* Print Styles for PDF/Pagination */
-        @media print {
-            body { display: block; background: white; }
-            nav, .btn-print, .no-print { display: none !important; }
-            main { margin-left: 0; padding: 0; max-width: 100%; }
-            section { 
-                box-shadow: none; 
-                margin: 0; 
-                padding: 1rem 0; 
-                page-break-before: always; 
-                border: none;
-            }
-            section:first-of-type { page-break-before: avoid; }
-            h1, h2, h3, h4 { page-break-after: avoid; }
-            .document-block { border: 1px solid #ccc; }
+        .title-page .driving-question {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--ink-soft);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .title-meta {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--line);
+            display: inline-block;
+            text-align: left;
+        }
+
+        .title-meta p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Navigation Buttons (Previous / Next) */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--line);
+            gap: 1rem;
+        }
+
+        .page-nav button {
+            background: transparent;
+            border: 1px solid var(--line);
+            padding: 0.7rem 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .page-nav button:hover:not(:disabled) {
+            background: var(--ink);
+            color: var(--surface);
+            border-color: var(--ink);
+        }
+
+        .page-nav button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
 
         /* Mobile Responsive */
-        @media (max-width: 768px) {
-            nav { transform: translateX(-100%); width: 100%; }
-            nav.open { transform: translateX(0); }
-            main { margin-left: 0; padding: 1.5rem; }
+        @media (max-width: 640px) {
+            header.top-bar { padding: 1rem; }
+            .site-title { font-size: 1.1rem; }
+            main { padding: 2rem 1.25rem 4rem; }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.6rem; }
+            .title-page h1 { font-size: 2.4rem; }
+            .document-block { padding: 1.5rem; }
+            .dropdown-menu { min-width: 220px; right: -0.5rem; }
         }
-        .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 200;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
+
+        /* Print Styles */
+        @media print {
+            header.top-bar { position: static; border: none; }
+            .dropdown, .page-nav { display: none !important; }
+            .page { display: block !important; page-break-before: always; }
+            .page:first-of-type { page-break-before: avoid; }
+            body { background: white; }
         }
-        @media (max-width: 768px) { .menu-toggle { display: block; } }
     </style>
 </head>
 <body>
 
-    <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">☰ Menu</button>
-
-    <!-- Navigation / Table of Contents -->
-    <nav class="no-print">
-        <h2>Table of Contents</h2>
-        <ul>
-            <li><a href="#title">Title Page</a></li>
-            <li><a href="#pathway">Pathway Expert</a></li>
-            <li><a href="#manager">Manager: Proposal</a></li>
-            <li><a href="#designer">Designer: Infographic</a></li>
-            <li><a href="#science">Science Expert</a></li>
-            <li><a href="#math">Math Expert</a></li>
-            <li><a href="#government">Government Analyst</a></li>
-            <li><a href="#techwriting">Technical Writer</a></li>
-            <li><a href="#interview">Professional Interview</a></li>
-            <li><a href="#literary">Literary Analyst</a></li>
-            <li><a href="#verification">Verification</a></li>
-            <li><a href="#cited">Works Cited</a></li>
-        </ul>
-    </nav>
+    <header class="top-bar">
+        <div class="site-title">Professional Analysis Portfolio</div>
+        <div class="dropdown" id="dropdown">
+            <button class="dropdown-toggle" onclick="toggleDropdown()">Table of Contents</button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#" data-page="title">Title Page</a>
+                <a href="#" data-page="pathway">Pathway Expert</a>
+                <a href="#" data-page="manager">Manager: Proposal</a>
+                <a href="#" data-page="designer">Designer: Infographic</a>
+                <a href="#" data-page="science">Science Expert</a>
+                <a href="#" data-page="math">Math Expert</a>
+                <a href="#" data-page="government">Government Analyst</a>
+                <a href="#" data-page="techwriting">Technical Writer</a>
+                <a href="#" data-page="interview">Professional Interview</a>
+                <a href="#" data-page="literary">Literary Analyst</a>
+                <a href="#" data-page="verification">Verification</a>
+                <a href="#" data-page="cited">Works Cited</a>
+            </div>
+        </div>
+    </header>
 
     <main>
-        <button class="btn-print no-print" onclick="window.print()">🖨️ Export to PDF / Print</button>
 
         <!-- TITLE PAGE -->
-        <section id="title">
+        <section id="title" class="page active title-page">
             <h1>Professional Analysis Portfolio</h1>
-            <p style="font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem;">
-                <strong>Driving Question:</strong> How can we leverage our STEM education to better prepare ourselves for our chosen career pathways?
-            </p>
-            <p><strong>Team Members:</strong> [Insert All 4 Names]</p>
-            <p><strong>Chosen Career Pathway:</strong> [Insert Career, e.g., Biomedical Engineer]</p>
-            <p><strong>Date:</strong> November 2026</p>
-            <div class="placeholder">
-                Reminder: Ensure your final portfolio is at least 2,000 words. Service industry jobs are strictly excluded!
+            <p class="driving-question">"How can we leverage our STEM education to better prepare ourselves for our chosen career pathways?"</p>
+            <div class="title-meta">
+                <p><strong>Team Members:</strong> [Insert All 4 Names]</p>
+                <p><strong>Chosen Career Pathway:</strong> [Insert Career]</p>
+                <p><strong>Date:</strong> November 2026</p>
             </div>
         </section>
 
         <!-- PATHWAY EXPERT -->
-        <section id="pathway">
+        <section id="pathway" class="page">
             <h2>Pathway Expert: Career Overview</h2>
             <h3>Job Description & Expectations</h3>
             <p>[Insert detailed job description, daily responsibilities, and job expectations here.]</p>
@@ -223,13 +381,13 @@
             <p><strong>Turnover Rate & Job Satisfaction:</strong> [Insert stats on stress, happiness, and turnover.]</p>
             <p><strong>Alternative Jobs:</strong> [What else can someone in this field do if they leave?]</p>
             
-            <div style="text-align: center; margin: 2rem 0; padding: 2rem; background: #edf2f7; border-radius: 8px;">
-                <p><em>[Insert Legible Graph/Chart here: e.g., Job Growth Projection or Salary by Location]</em></p>
+            <div class="placeholder-box">
+                <p>[Insert Legible Graph/Chart here: e.g., Job Growth Projection or Salary by Location]</p>
             </div>
         </section>
 
         <!-- MANAGER -->
-        <section id="manager">
+        <section id="manager" class="page">
             <h2>Manager: Hiring Proposal</h2>
             <div class="document-block">
                 <p><strong>To:</strong> [Superiors/Board of Directors]</p>
@@ -257,23 +415,17 @@
         </section>
 
         <!-- DESIGNER -->
-        <section id="designer">
+        <section id="designer" class="page">
             <h2>Designer: Day-in-the-Life Infographic</h2>
             <div class="document-block" style="text-align: center;">
-                <p><em>[Insert your Infographic Image Here]</em></p>
-                <div class="placeholder" style="text-align: left;">
-                    <strong>Designer Checklist:</strong>
-                    <ul>
-                        <li>Does it present the core responsibilities and job tasks?</li>
-                        <li>Does it visually convey a "day-in-the-life" timeline or flow?</li>
-                        <li>Does it make good use of visual space, structure, color, and fonts?</li>
-                    </ul>
+                <div class="placeholder-box">
+                    <p>[Insert your Infographic Image Here]</p>
                 </div>
             </div>
         </section>
 
         <!-- SCIENCE EXPERT -->
-        <section id="science">
+        <section id="science" class="page">
             <h2>Science Expert: Universal Truth Email</h2>
             <div class="document-block">
                 <p><strong>To:</strong> [Science Teacher's Email]</p>
@@ -292,7 +444,7 @@
         </section>
 
         <!-- MATH EXPERT -->
-        <section id="math">
+        <section id="math" class="page">
             <h2>Math Expert: Memorandum & Budget</h2>
             <div class="document-block">
                 <div class="memo-header">
@@ -312,8 +464,8 @@
                 <h3>3. First-Year Employment Budget</h3>
                 <p>[Detail the impacts of necessary education (e.g., student loans), expected starting salary, and first-year expenses.]</p>
                 
-                <div style="text-align: center; margin: 1.5rem 0; padding: 1.5rem; background: #edf2f7; border-radius: 8px;">
-                    <p><em>[Insert Budget Chart/Graph here]</em></p>
+                <div class="placeholder-box">
+                    <p>[Insert Budget Chart/Graph here]</p>
                 </div>
 
                 <h3>4. Conclusion</h3>
@@ -322,11 +474,11 @@
         </section>
 
         <!-- GOVERNMENT ANALYST -->
-        <section id="government">
+        <section id="government" class="page">
             <h2>Government Analyst: Regulatory Report</h2>
             <div class="document-block">
                 <div class="report-header">
-                    <h3 style="border: none; margin:0;">Report on Regulations and Legalities in [Career Field]</h3>
+                    <h4 style="margin:0; font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;">Report on Regulations and Legalities in [Career Field]</h4>
                 </div>
                 
                 <p><strong>Table of Contents</strong></p>
@@ -360,7 +512,7 @@
         </section>
 
         <!-- TECHNICAL WRITER -->
-        <section id="techwriting">
+        <section id="techwriting" class="page">
             <h2>Technical Writer: Application Materials</h2>
             
             <h3>Applicant 1: No Experience (Entry Level)</h3>
@@ -381,7 +533,7 @@
         </section>
 
         <!-- PROFESSIONAL INTERVIEW -->
-        <section id="interview">
+        <section id="interview" class="page">
             <h2>Professional Interview & Showcase Invitation</h2>
             <div class="document-block">
                 <h3>Email Invitation to Showcase</h3>
@@ -396,27 +548,27 @@
                 <br>
                 <p><strong>Q:</strong> [Insert Question]</p>
                 <p><strong>A:</strong> [Insert Answer]</p>
-                <p><em>[Continue transcript... Ensure this is thorough to help hit the 2,000-word count!]</em></p>
+                <p><em>[Continue transcript...]</em></p>
             </div>
         </section>
 
         <!-- LITERARY ANALYST -->
-        <section id="literary">
+        <section id="literary" class="page">
             <h2>Literary Analyst: Academic Essay</h2>
-            <div class="document-block" style="font-family: 'Times New Roman', Times, serif; line-height: 1.8;">
-                <p style="text-align: center;">[Your Name]</p>
-                <p style="text-align: center;">[Teacher Name]</p>
-                <p style="text-align: center;">[Class Name]</p>
-                <p style="text-align: center;">November 4, 2026</p>
+            <div class="document-block" style="font-family: 'Cormorant Garamond', Georgia, serif; line-height: 1.9; font-size: 1.05rem;">
+                <p style="text-align: center; font-family: 'Inter', sans-serif; font-size: 0.9rem;">[Your Name]</p>
+                <p style="text-align: center; font-family: 'Inter', sans-serif; font-size: 0.9rem;">[Teacher Name]</p>
+                <p style="text-align: center; font-family: 'Inter', sans-serif; font-size: 0.9rem;">[Class Name]</p>
+                <p style="text-align: center; font-family: 'Inter', sans-serif; font-size: 0.9rem;">November 4, 2026</p>
                 <br>
-                <p style="text-align: center; font-weight: bold;">[Title of Your Essay]</p>
+                <p style="text-align: center; font-weight: 600; font-size: 1.3rem;">[Title of Your Essay]</p>
                 <br>
                 <p style="text-indent: 2rem;">[Write your AP-style academic essay here. Explore a thematically related literary text (fiction or poetry) and link its theme to your chosen career field. Ensure you use proper academic tone and textual evidence.]</p>
             </div>
         </section>
 
         <!-- VERIFICATION -->
-        <section id="verification">
+        <section id="verification" class="page">
             <h2>Career Expert Verification</h2>
             <div class="document-block">
                 <p><strong>Statement of Verification:</strong></p>
@@ -428,7 +580,7 @@
         </section>
 
         <!-- WORKS CITED -->
-        <section id="cited">
+        <section id="cited" class="page">
             <h2>Works Cited</h2>
             <div class="document-block">
                 <p>[Format your citations in MLA or APA style. Ensure you include:]</p>
@@ -446,37 +598,98 @@
             </div>
         </section>
 
+        <!-- Page Navigation (Previous / Next) -->
+        <div class="page-nav">
+            <button id="prevBtn" onclick="navigatePage(-1)">← Previous</button>
+            <button id="nextBtn" onclick="navigatePage(1)">Next →</button>
+        </div>
+
     </main>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        const pages = ['title', 'pathway', 'manager', 'designer', 'science', 'math', 'government', 'techwriting', 'interview', 'literary', 'verification', 'cited'];
+        let currentPageIndex = 0;
+
+        // Initialize from URL hash if present
+        function initFromHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && pages.includes(hash)) {
+                showPage(hash, false);
+            }
+        }
+
+        function showPage(pageId, updateHash = true) {
+            const index = pages.indexOf(pageId);
+            if (index === -1) return;
+
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            // Show selected page
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+                currentPageIndex = index;
+                
+                // Update dropdown active state
+                document.querySelectorAll('.dropdown-menu a').forEach(a => {
+                    a.classList.toggle('active', a.dataset.page === pageId);
                 });
-                document.querySelector('nav').classList.remove('open');
+
+                // Update URL hash
+                if (updateHash) {
+                    history.replaceState(null, '', '#' + pageId);
+                }
+
+                // Update prev/next buttons
+                document.getElementById('prevBtn').disabled = currentPageIndex === 0;
+                document.getElementById('nextBtn').disabled = currentPageIndex === pages.length - 1;
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function navigatePage(direction) {
+            const newIndex = currentPageIndex + direction;
+            if (newIndex >= 0 && newIndex < pages.length) {
+                showPage(pages[newIndex]);
+            }
+        }
+
+        function toggleDropdown() {
+            document.getElementById('dropdown').classList.toggle('open');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('dropdown');
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        // Dropdown link clicks
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(link.dataset.page);
+                document.getElementById('dropdown').classList.remove('open');
             });
         });
 
-        // Highlight active section in nav on scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-            document.querySelectorAll('section').forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
+        // Handle browser back/forward
+        window.addEventListener('hashchange', initFromHash);
 
-            document.querySelectorAll('nav a').forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href') === `#${current}`) {
-                    a.classList.add('active');
-                }
-            });
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') navigatePage(-1);
+            if (e.key === 'ArrowRight') navigatePage(1);
         });
+
+        // Initialize
+        initFromHash();
+        showPage(pages[currentPageIndex], false);
     </script>
 </body>
 </html>
